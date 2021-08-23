@@ -71,7 +71,7 @@ class AvailableImages {
     'assetImage' : AssetImage('assets/images/empty.png'),
     'assetPath' : 'assets/images/empty.png',
   };
-
+  static const carPage = const AssetImage('assets/images/car.jpg');
   static const homePage = const AssetImage('assets/images/home_page.png');  
   static const appLogo = const AssetImage('assets/images/logo.png');
   static const background = const AssetImage('assets/images/images.jfif');

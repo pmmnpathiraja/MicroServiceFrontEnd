@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:front/add_vehicle.dart';
 import 'package:front/list.dart';
+import 'package:front/utils/utils.dart';
 import 'dart:async';
 import 'dart:convert' as convert;
 import 'package:http/http.dart';
@@ -34,8 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
 
   Future<void> pageChangeFunction(var vehicleType) async {
     final vehicleTypeResponse = await get(Uri.parse(
@@ -79,14 +78,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (BuildContext context) {
-      return PageListChange(vehicleTypeResponseMap,vehicleReviewResponseMap,vehicleAvailabilityMap);
+      return PageListChange(vehicleTypeResponseMap, vehicleReviewResponseMap,
+          vehicleAvailabilityMap);
     }));
 
     // Navigator.of(context)
     //     .push(MaterialPageRoute(builder: (BuildContext context) {
     //   return RegisterPage();
     // }));
-
   }
 
   _makeGetRequest() async {
@@ -205,15 +204,13 @@ class _MyHomePageState extends State<MyHomePage> {
     print("ddddddddddddddddddddddddddddddd");
     vehicleReviewResponseMap[1]["reviewList"].add("bbbbbbb");
     print(vehicleReviewResponseMap[1]["reviewList"]);
-    var url = Uri.parse(
-        'http://localhost:9090/api/review-service/rv/by/6');
+    var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/6');
     Map data = {
-      "id" : "6",
+      "id": "6",
       "reviewList": ["Good"]
     };
     //encode Map to JSON
     print(data.runtimeType);
-
 
     var body = json.encode(vehicleReviewResponseMap[1]);
 
@@ -228,17 +225,8 @@ class _MyHomePageState extends State<MyHomePage> {
         convert.jsonDecode(vehicleAvailability1.body);
     Map vehicleAvailabilityMap1 = vehicleAvailabilityJson1.asMap();
     print(vehicleAvailabilityMap1);
-
   }
 
-  void _incrementCounter() {
-     //_makeGetRequest();
-   pageChangeFunction('car');
-    //
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,28 +234,30 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text(widget.title,            style: TextStyle(
-          fontWeight: FontWeight.w800,
-          fontSize: 20.0,
-          color: Colors.black,
-        )),
+        title: Text(widget.title,
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 20.0,
+              color: Colors.black,
+            )),
         backgroundColor: Colors.white,
       ),
       body: Row(children: <Widget>[
         Expanded(
           flex: 5,
           child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'You have pushed the button this many times:',
+            child: Padding(
+              padding: EdgeInsets.only(left: 10.0),
+              child: Container(
+                height: 300.0,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AvailableImages.carPage,
+                    fit: BoxFit.contain,
+                  ),
                 ),
-                Text(
-                  '$_counter',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
+              ),
             ),
           ),
         ),
@@ -276,115 +266,171 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.max
-                  ,
+                  mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 10.0),
+                  child: Container(
+                    height: 300.0,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AvailableImages.homePage,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
                 Stack(
                   children: <Widget>[
                     // Stroked text as border.
-                     Text(
-                      'Greetings, planet!',
+                    Text(
+                      'This app can be used in an administration system of a vehicle renting',
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 20,
                         foreground: Paint()
                           ..style = PaintingStyle.stroke
-                          ..strokeWidth = 6
-                          ..color = Colors.black12,
+                          ..strokeWidth = 1.4
+                          ..color = Color(0xFF880E4F),
                       ),
                     ),
                     // Solid text as fill.
-                      Text(
-                      'Greetings, planet!',
+                    Text(
+                      'This app can be used in an administration system of a vehicle renting',
                       style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.black26,
+                        fontSize: 20,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
                       ),
                     ),
                   ],
                 ),
-                    SizedBox(height: 20,),
-                    Stack(
-                      children: <Widget>[
-                        // Stroked text as border.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black12,
-                          ),
-                        ),
-                        // Solid text as fill.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black26,
-                          ),
-                        ),
-                      ],
+                Stack(
+                  children: <Widget>[
+                    // Stroked text as border.
+                    Text(
+                      'service. The microservices within it are used to register new ',
+                      style: TextStyle(
+                        fontSize: 22,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.45
+                          ..color = Color(0xFF880E4F),
+                      ),
                     ),
-                    SizedBox(height: 20,),
-                    Stack(
-                      children: <Widget>[
-                        // Stroked text as border.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black12,
-                          ),
-                        ),
-                        // Solid text as fill.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black26,
-                          ),
-                        ),
-                      ],
+                    // Solid text as fill.
+                    Text(
+                      'service. The microservices within it are used to register new ',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
+                      ),
                     ),
-                    SizedBox(height: 20,),
-                    Stack(
-                      children: <Widget>[
-                        // Stroked text as border.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            foreground: Paint()
-                              ..style = PaintingStyle.stroke
-                              ..strokeWidth = 6
-                              ..color = Colors.black12,
-                          ),
-                        ),
-                        // Solid text as fill.
-                        Text(
-                          'Greetings, planet!',
-                          style: TextStyle(
-                            fontSize: 40,
-                            color: Colors.black26,
-                          ),
-                        ),
-                      ],
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    // Stroked text as border.
+                    Text(
+                      'vehicles, search for the vehicles to be rented out, ',
+                      style: TextStyle(
+                        fontSize: 24,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Color(0xFF880E4F),
+                      ),
                     ),
-                    SizedBox(height: 20,),
-
-
+                    // Solid text as fill.
+                    Text(
+                      'vehicles, search for the vehicles to be rented out, ',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    // Stroked text as border.
+                    Text(
+                      'edit their availability and other information,',
+                      style: TextStyle(
+                        fontSize: 26,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Color(0xFF880E4F),
+                      ),
+                    ),
+                    // Solid text as fill.
+                    Text(
+                      'edit their availability and other information,',
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    // Stroked text as border.
+                    Text(
+                      'and view and edit the reviews ',
+                      style: TextStyle(
+                        fontSize: 28,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Color(0xFF880E4F),
+                      ),
+                    ),
+                    // Solid text as fill.
+                    Text(
+                      'and view and edit the reviews ',
+                      style: TextStyle(
+                        fontSize: 28,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
+                      ),
+                    ),
+                  ],
+                ),
+                Stack(
+                  children: <Widget>[
+                    // Stroked text as border.
+                    Text(
+                      'given by the customers.',
+                      style: TextStyle(
+                        fontSize: 30,
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1.5
+                          ..color = Color(0xFF880E4F),
+                      ),
+                    ),
+                    // Solid text as fill.
+                    Text(
+                      'given by the customers.',
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Color(0xFFF48FB1).withOpacity(0.3),
+                      ),
+                    ),
+                  ],
+                ),
               ])),
         )
       ]),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () =>
-
-            Navigator.of(context)
+        onPressed: () => Navigator.of(context)
             .push(MaterialPageRoute(builder: (BuildContext context) {
           return RegisterPage();
         })),
@@ -401,8 +447,16 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 color: new Color(0xFF0062ac),
               ),
-              accountName: Text("authNotifier.user.displayName"),
-              accountEmail: Text("authNotifier.user.email"),
+              accountName: Text("Adeesh Kulathunga",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  )),
+              accountEmail: Text("adeeshkulathunga@gmail.com",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  )),
               currentAccountPicture: CircleAvatar(
                 backgroundColor:
                     Theme.of(context).platform == TargetPlatform.iOS
@@ -411,6 +465,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Icon(
                   Icons.person,
                   size: 50,
+                  color: Color(0xFF0062ac),
                 ),
               ),
             ),

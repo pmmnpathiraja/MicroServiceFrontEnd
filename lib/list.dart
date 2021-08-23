@@ -137,6 +137,7 @@ class _PageListChangeState extends State<PageListChange> {
         availabilityId = id;
         reviewValidate = 0;
         validate = 0;
+        reviweID = -1;
         widget.vehicleReviewResponse.forEach((key, value) {
           if (id.toString() == value['id']) {
             reviewValidate = 1;
@@ -179,19 +180,35 @@ class _PageListChangeState extends State<PageListChange> {
     }
 
     Future<void> updateReview() async {
-      var id = widget.vehicleReviewResponse[reviweID]['id'];
-      var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/$id');
 
-      widget.vehicleReviewResponse[reviweID]["reviewList"]
-          .add(_nameController.text);
-      print(_nameController.text);
-      var body = json.encode(widget.vehicleReviewResponse[reviweID]);
+      if(reviweID == -1){
+        var reviewUrl = Uri.parse(
+            'http://localhost:9090/api/review-service/rv/by/createReview');
+        Map reviewData = {
+          "id" : "$availabilityId",
+          "reviewList": ["${_nameController.text}"]
+        };
+        var reviewBody = json.encode(reviewData);
+        var reviewResponse = await post(reviewUrl,
+            headers: {"Content-Type": "application/json"}, body: reviewBody);
+        print('Response status: ${reviewResponse.statusCode}');
+        print('Response body: ${reviewResponse.body}');
+        pageChangeFunction('car');
+      }
+      else{
+        var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/$availabilityId');
+        var body;
+        widget.vehicleReviewResponse[reviweID]["reviewList"]
+            .add(_nameController.text);
 
-      var response = await put(url,
-          headers: {"Content-Type": "application/json"}, body: body);
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      pageChangeFunction('car');
+        print(_nameController.text);
+        body = json.encode(widget.vehicleReviewResponse[reviweID]);
+        var response = await put(url,
+            headers: {"Content-Type": "application/json"}, body: body);
+        print('Response status: ${response.statusCode}');
+        print('Response body: ${response.body}');
+        pageChangeFunction('car');
+      }
     }
 
     Future<void> deleteOneReview(String reviewDelete) async {
@@ -414,8 +431,8 @@ class _PageListChangeState extends State<PageListChange> {
                 decoration: BoxDecoration(
                   color: new Color(0xFF0062ac),
                 ),
-                accountName: Text("authNotifier.user.displayName"),
-                accountEmail: Text("authNotifier.user.email"),
+                accountName: Text("Adeesh Kulathunga"),
+                accountEmail: Text("adeeshkulathunga@gmail.com"),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor:
                       Theme.of(context).platform == TargetPlatform.iOS

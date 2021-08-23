@@ -45,7 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     final pageTitle = Container(
       child: Text(
-        "   Add Vehicle Details ",
+        "   Add Vehicle Details !!! ",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black,
