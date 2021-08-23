@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:front/main.dart';
-import 'package:front/utils/utils.dart';
 import 'package:http/http.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:string_validator/string_validator.dart';
@@ -308,7 +307,7 @@ class _RegisterPageState extends State<RegisterPage> {
     var urlVehicleReg = Uri.parse('http://localhost:9090/api/category-service/vehicle/create');
     Map vehicleData = {
       "licensePlateNumber": "${_numberController.text}",
-      "category":"${_typeController.text}",
+      "category":"${_typeController.text.toLowerCase()}",
       "numberOfSeats":"${_seatController.text}"
     };
     //encode Map to JSON
@@ -354,40 +353,4 @@ class _RegisterPageState extends State<RegisterPage> {
       return MyApp();
     }));
   }
-  // void _register() async {
-  //   print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")  ;
-  //   try {
-  //     UserCredential authResult = await _auth.createUserWithEmailAndPassword(
-  //       email: _emailController.text,
-  //       password: _passwordController.text,
-  //     );
-  //
-  //     if (authResult != null) {
-  //
-  //       User firebaseUser = authResult.user;
-  //
-  //       if (firebaseUser != null) {
-  //         await firebaseUser.updateProfile(displayName:_nationalIDNumberController.text);
-  //
-  //         await firebaseUser.reload();
-  //         print("Sign up: $firebaseUser");
-  //         userUploadData();
-  //         Navigator.of(context)
-  //             .push(MaterialPageRoute(builder: (BuildContext context) {
-  //           return LoginInit();
-  //         }));
-  //       }
-  //     }
-  //   } catch (signUpError) {
-  //     if (signUpError is PlatformException) {
-  //       if (signUpError.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-  //         _clearForm();
-  //         if (_formKey.currentState!.validate()) {
-  //           _emailValidator = 1;
-  //         }
-  //         return null;
-  //       }
-  //     }
-  //   }
-  // }
 }

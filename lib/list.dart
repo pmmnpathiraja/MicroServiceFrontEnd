@@ -62,7 +62,7 @@ class _PageListChangeState extends State<PageListChange> {
             }
             return null;
           }
-          return "Please enter the vehicle type";
+          return "Please enter the vehicle Review";
         },
         keyboardType: TextInputType.text,
         style: TextStyle(color: Colors.black),
@@ -73,7 +73,8 @@ class _PageListChangeState extends State<PageListChange> {
     Future<void> pageChangeFunction(var vehicleType) async {
       final vehicleTypeResponse = await get(Uri.parse(
           'http://localhost:9090/api/category-service/vehicle/category?category=$vehicleType'));
-      var vehicleTypeResponseJson = convert.jsonDecode(vehicleTypeResponse.body);
+      var vehicleTypeResponseJson =
+          convert.jsonDecode(vehicleTypeResponse.body);
       var vehicleTypeResponseMap = vehicleTypeResponseJson.asMap();
       print(vehicleTypeResponseJson);
       //print(vehicleTypeResponseMap);
@@ -99,12 +100,13 @@ class _PageListChangeState extends State<PageListChange> {
       final vehicleReviewResponse = await get(
           Uri.parse('http://localhost:9090/api/review-service/rv/getAll'));
       var vehicleReviewResponseJson =
-      convert.jsonDecode(vehicleReviewResponse.body);
+          convert.jsonDecode(vehicleReviewResponse.body);
       var vehicleReviewResponseMap = vehicleReviewResponseJson.asMap();
       //print(vehicleReviewResponseMap);
       final vehicleAvailability = await get(Uri.parse(
           'http://localhost:9090/api/availability-service/availability/getAll'));
-      var vehicleAvailabilityJson = convert.jsonDecode(vehicleAvailability.body);
+      var vehicleAvailabilityJson =
+          convert.jsonDecode(vehicleAvailability.body);
       Map vehicleAvailabilityMap = vehicleAvailabilityJson.asMap();
 
       print(vehicleAvailabilityMap);
@@ -112,7 +114,8 @@ class _PageListChangeState extends State<PageListChange> {
 
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (BuildContext context) {
-        return PageListChange(vehicleTypeResponseMap,vehicleReviewResponseMap,vehicleAvailabilityMap);
+        return PageListChange(vehicleTypeResponseMap, vehicleReviewResponseMap,
+            vehicleAvailabilityMap);
       }));
     }
 
@@ -151,18 +154,11 @@ class _PageListChangeState extends State<PageListChange> {
       var url = Uri.parse(
           'http://localhost:9090/api/availability-service/availability/updateAvailability/$availabilityId');
       var body;
-      if(availabilityValidate == 0){
-        Map data = {
-          "id" : "$availabilityId",
-          "availability": "In Stock"
-        };
+      if (availabilityValidate == 0) {
+        Map data = {"id": "$availabilityId", "availability": "In Stock"};
         body = json.encode(data);
-      }
-      else{
-        Map data = {
-          "id" : "$availabilityId",
-          "availability": "Out of Stock"
-        };
+      } else {
+        Map data = {"id": "$availabilityId", "availability": "Out of Stock"};
         body = json.encode(data);
       }
       var response = await put(url,
@@ -184,10 +180,10 @@ class _PageListChangeState extends State<PageListChange> {
 
     Future<void> updateReview() async {
       var id = widget.vehicleReviewResponse[reviweID]['id'];
-      var url = Uri.parse(
-          'http://localhost:9090/api/review-service/rv/by/$id');
+      var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/$id');
 
-      widget.vehicleReviewResponse[reviweID]["reviewList"].add(_nameController.text);
+      widget.vehicleReviewResponse[reviweID]["reviewList"]
+          .add(_nameController.text);
       print(_nameController.text);
       var body = json.encode(widget.vehicleReviewResponse[reviweID]);
 
@@ -200,8 +196,7 @@ class _PageListChangeState extends State<PageListChange> {
 
     Future<void> deleteOneReview(String reviewDelete) async {
       var id = widget.vehicleReviewResponse[reviweID]['id'];
-      var url = Uri.parse(
-          'http://localhost:9090/api/review-service/rv/by/$id');
+      var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/$id');
 
       widget.vehicleReviewResponse[reviweID]["reviewList"].remove(reviewDelete);
       print(_nameController.text);
@@ -213,208 +208,201 @@ class _PageListChangeState extends State<PageListChange> {
       print('Response body: ${response.body}');
 
       pageChangeFunction('car');
-
     }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
+      color: Colors.black,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(title),
+          iconTheme: IconThemeData(color: Colors.black),
+          title: const Text(
+            title,
+            style: TextStyle(
+              fontWeight: FontWeight.w800,
+              fontSize: 20.0,
+              color: Colors.black,
+            ),
+          ),
+          backgroundColor: Colors.white,
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.only(right: 20.0),
                 child: GestureDetector(
-                  onTap: () =>      Navigator.of(context)
+                  onTap: () => Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
                     return MyApp();
                   })),
                   child: Icon(
                     Icons.home,
                     size: 26.0,
+                    color: Colors.black,
                   ),
-                )
-            ),
+                )),
           ],
         ),
         body: Row(
           children: <Widget>[
             Expanded(
-              flex: 2,
-              child: ListView.separated(
-                itemCount: widget.vehicleTypeResponse.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    tileColor: checkAvailability(
-                                widget.vehicleTypeResponse[index]['id']) ==
-                            1
-                        ? Colors.white30
-                        : Colors.red,
-                    title: Text(
-                        "Plate No     =   ${widget.vehicleTypeResponse[index]['licensePlateNumber'].toString()}"),
-                    subtitle: Text(
-                        "No.of Seats  =   ${widget.vehicleTypeResponse[index]['numberOfSeats'].toString()}"),
-                    onTap: () =>
-                        validateData(widget.vehicleTypeResponse[index]['id']),
-                    onLongPress: () {
-                      validateData(widget.vehicleTypeResponse[index]['id']);
-                      deleteReview(
-                          widget.vehicleReviewResponse[reviweID]['id']);
-                    }
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider(
-                    color: Colors.black,
-                  );
-                },
+                flex: 2,
+                child: Container(
+                  child: ListView.separated(
+                    itemCount: widget.vehicleTypeResponse.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                          tileColor: checkAvailability(widget
+                                      .vehicleTypeResponse[index]['id']) ==
+                                  1
+                              ? Colors.white30
+                              : Colors.red,
+                          title: Text(
+                              "Plate No     =   ${widget.vehicleTypeResponse[index]['licensePlateNumber'].toString()}"),
+                          subtitle: Text(
+                              "No.of Seats  =   ${widget.vehicleTypeResponse[index]['numberOfSeats'].toString()}"),
+                          onTap: () => validateData(
+                              widget.vehicleTypeResponse[index]['id']),
+                          onLongPress: () {
+                            validateData(
+                                widget.vehicleTypeResponse[index]['id']);
+                            deleteReview(
+                                widget.vehicleReviewResponse[reviweID]['id']);
+                          });
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider(
+                        color: Colors.black,
+                      );
+                    },
+                  ),
+                )),
+            Expanded(
+              flex: 5,
+              child: Container(
+                child: validate != 0 && reviewValidate != 0
+                    ? ListView.separated(
+                        itemCount: widget
+                            .vehicleReviewResponse[reviweID]['reviewList']
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Text(
+                              "${widget.vehicleReviewResponse[reviweID]['reviewList'][index].toString()}",
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.black),
+                            ),
+                            //onTap: validateData,
+                            onLongPress: () => deleteOneReview(widget
+                                .vehicleReviewResponse[reviweID]['reviewList']
+                                    [index]
+                                .toString()),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider(
+                            color: Colors.black,
+                          );
+                        },
+                      )
+                    : Container(),
               ),
             ),
             Expanded(
               flex: 5,
-              child: validate != 0 && reviewValidate != 0
-                  ? ListView.separated(
-                      itemCount: widget
-                          .vehicleReviewResponse[reviweID]['reviewList'].length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Text(
-                              "${widget.vehicleReviewResponse[reviweID]['reviewList'][index].toString()}"),
-                          subtitle: Text(''),
-                          //onTap: validateData,
-                          onLongPress: () => deleteOneReview(widget.vehicleReviewResponse[reviweID]['reviewList'][index].toString()),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          color: Colors.black,
-                        );
-                      },
-                    )
-                  : Container(),
-            ),
-            Expanded(
-              flex: 5,
-              child: openButton == 1
-                  ? Container(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(top: 20.0),
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10.0, bottom: 20.0),
-                              height: 60.0,
-                              width: 200,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.0),
-                                border: Border.all(color: Colors.white),
-                              ),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(7.0),
-                                color: availabilityValidate == 1
-                                    ? primaryColor
-                                    : Colors.red,
-                                elevation: 10.0,
-                                shadowColor: Colors.white70,
-                                child: MaterialButton(
-                                  //onPressed: () => Navigator.of(context).pushNamed(homeViewRoute),
-                                  onPressed: () =>updateAvailabilityId(),
-                                  child: availabilityValidate == 1
-                                      ? Text(
-                                          'SEND',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 20.0,
-                                            color: Colors.white,
+              child: Container(
+                child: openButton == 1
+                    ? Container(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.max,
+                            children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 20.0),
+                              child: Container(
+                                margin:
+                                    EdgeInsets.only(top: 10.0, bottom: 20.0),
+                                height: 60.0,
+                                width: 200,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7.0),
+                                  border: Border.all(color: Colors.white),
+                                ),
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(7.0),
+                                  color: availabilityValidate == 1
+                                      ? primaryColor
+                                      : Colors.red,
+                                  elevation: 10.0,
+                                  shadowColor: Colors.white70,
+                                  child: MaterialButton(
+                                    //onPressed: () => Navigator.of(context).pushNamed(homeViewRoute),
+                                    onPressed: () => updateAvailabilityId(),
+                                    child: availabilityValidate == 1
+                                        ? Text(
+                                            'ALLOW',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 20.0,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Text(
+                                            'RECEIVED',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 20.0,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        )
-                                      : Text(
-                                          'RECEIVED',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 20.0,
-                                            color: Colors.white,
-                                          ),
-                                        ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                          Text(
-                            '   Enter the Review to Update !!!',
-                            style: TextStyle(
-                              fontSize: 20,
-                              foreground: Paint()
-                                ..style = PaintingStyle.stroke
-                                ..strokeWidth = 2
-                                ..color = Colors.black12,
+                            SizedBox(
+                              height: 30,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 30.0),
-                            child: Form(
-                              key: _formKey,
-                              child: Column(
-                                children: <Widget>[
-                                  _buildFormNameField('Vehicle Type',
-                                      LineIcons.car, _nameController),
-                                ],
+                            Text(
+                              '   Enter the Review to Update !!!',
+                              style:
+                                  TextStyle(fontSize: 40, color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 30.0),
+                              child: Form(
+                                key: _formKey,
+                                child: Column(
+                                  children: <Widget>[
+                                    _buildFormNameField('Review', LineIcons.car,
+                                        _nameController),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: const TextStyle(fontSize: 20)),
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                updateReview();
-                              }
-                            },
-                            child: const Text('Update Review'),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          // Stack(
-                          //   children: <Widget>[
-                          //     // Stroked text as border.
-                          //     Text(
-                          //       'Greetings, planet!',
-                          //       style: TextStyle(
-                          //         fontSize: 40,
-                          //         foreground: Paint()
-                          //           ..style = PaintingStyle.stroke
-                          //           ..strokeWidth = 6
-                          //           ..color = Colors.black12,
-                          //       ),
-                          //     ),
-                          //     // Solid text as fill.
-                          //     Text(
-                          //       'Greetings, planet!',
-                          //       style: TextStyle(
-                          //         fontSize: 40,
-                          //         color: Colors.black26,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                        ]))
-                  : Container(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  textStyle: const TextStyle(fontSize: 20)),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  updateReview();
+                                }
+                              },
+                              child: const Text('Update Review'),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ]))
+                    : Container(),
+              ),
             ),
           ],
         ),

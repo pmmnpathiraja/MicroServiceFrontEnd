@@ -245,34 +245,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text(widget.title),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Colors.white,
-                    Colors.deepOrangeAccent,
-                  ],
-                  begin: const FractionalOffset(0.0, 0.0),
-                  end: const FractionalOffset(1.0, 0.0),
-                  stops: [0.0, 1.0],
-                  tileMode: TileMode.clamp),
-            ),
-          )
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Text(widget.title,            style: TextStyle(
+          fontWeight: FontWeight.w800,
+          fontSize: 20.0,
+          color: Colors.black,
+        )),
+        backgroundColor: Colors.white,
       ),
       body: Row(children: <Widget>[
         Expanded(
           flex: 5,
           child: Container(
-            decoration: new BoxDecoration(
-                gradient: new LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Colors.white,
-                    Colors.lightBlue
-                  ],
-                )),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -290,18 +274,10 @@ class _MyHomePageState extends State<MyHomePage> {
         Expanded(
           flex: 5,
           child: Container(
-              decoration: new BoxDecoration(
-                  gradient: new LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Colors.white,
-                      Colors.lightBlue
-                    ],
-                  )),
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: MainAxisSize.max
+                  ,
                   children: <Widget>[
                 Stack(
                   children: <Widget>[
@@ -415,6 +391,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // _incrementCounter(),
         tooltip: 'Increment',
         child: Icon(Icons.add),
+        backgroundColor: Colors.lightBlue,
       ),
       drawer: Drawer(
         elevation: 4,
