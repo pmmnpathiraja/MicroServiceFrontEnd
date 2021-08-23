@@ -252,11 +252,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 500.0,
                     width: 700.0,
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/car6.jfif'),
-                        fit: BoxFit.fill,
-                      ),
+                      // image: DecorationImage(
+                      //   image: AssetImage(
+                      //       'assets/images/images.jfif'),
+                      //   fit: BoxFit.fill,
+                      // ),
                       shape: BoxShape.circle,
                     ),
                   )
