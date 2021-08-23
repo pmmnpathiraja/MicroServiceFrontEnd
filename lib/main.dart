@@ -245,21 +245,22 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Row(children: <Widget>[
         Expanded(
           flex: 5,
-          child: Container(
-            child: Padding(
-              padding: EdgeInsets.only(left: 10.0),
-              child: Container(
-                height: 300.0,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AvailableImages.carPage,
-                    fit: BoxFit.contain,
-                  ),
-                ),
+
+              child: Padding(
+                padding: EdgeInsets.only(left: 10.0),
+                  child: Container(
+                    height: 500.0,
+                    width: 700.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/car6.jfif'),
+                        fit: BoxFit.fill,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                  )
               ),
-            ),
-          ),
         ),
         Expanded(
           flex: 5,

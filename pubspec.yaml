@@ -93,5 +93,12 @@ flutter:
     - assets/images/post_banner.jpg
     - assets/images/images.jfif
     - assets/images/car.jpg
+    - assets/images/car1.jfif
+    - assets/images/car2.jpg
+    - assets/images/car3.jpg
+    - assets/images/car4.jpg
+    - assets/images/car5.jpg
+    - assets/images/car6.jfif
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
