@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:front/add_vehicle.dart';
 import 'package:front/list.dart';
@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   Future<void> pageChangeFunction(var vehicleType) async {
     final vehicleTypeResponse = await get(Uri.parse(
         'http://localhost:9090/api/category-service/vehicle/category?category=$vehicleType'));
@@ -201,7 +200,6 @@ class _MyHomePageState extends State<MyHomePage> {
     // var vehicleTypeResponseMap1 = vehicleTypeResponseJson1.asMap();
     // print(vehicleTypeResponseMap1);
 //************************************************************************************************************************
-    print("ddddddddddddddddddddddddddddddd");
     vehicleReviewResponseMap[1]["reviewList"].add("bbbbbbb");
     print(vehicleReviewResponseMap[1]["reviewList"]);
     var url = Uri.parse('http://localhost:9090/api/review-service/rv/by/6');
@@ -227,7 +225,6 @@ class _MyHomePageState extends State<MyHomePage> {
     print(vehicleAvailabilityMap1);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -245,22 +242,57 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Row(children: <Widget>[
         Expanded(
           flex: 5,
-
-              child: Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                  child: Container(
-                    height: 500.0,
-                    width: 700.0,
-                    decoration: BoxDecoration(
-                      // image: DecorationImage(
-                      //   image: AssetImage(
-                      //       'assets/images/images.jfif'),
-                      //   fit: BoxFit.fill,
-                      // ),
-                      shape: BoxShape.circle,
+          child: Container(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 100,
                     ),
-                  )
-              ),
+                    Text(
+                      'GrandeHire',
+                      style: TextStyle(
+                          fontSize: 80,
+                          foreground: Paint()
+                            ..shader = ui.Gradient.linear(
+                              const Offset(0, 20),
+                              const Offset(450, 20),
+                              <Color>[
+                                Colors.red,
+                                Colors.yellow,
+                              ],
+                            )
+                      ),
+                    ),
+                    Text(
+                      ' WebApp',
+                      style: TextStyle(
+                          fontSize: 60,
+                          foreground: Paint()
+                            ..shader = ui.Gradient.linear(
+                              const Offset(0, 20),
+                              const Offset(450, 20),
+                              <Color>[
+                                Color(0xFF880E4F),
+                                Color(0xFFF8BBD0),
+                              ],
+                            ),
+                      ),
+                    ),
+                    Container(
+                      height: 300.0,
+                      width: 300.0,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              'assets/images/images.jfif'),
+                          fit: BoxFit.fitWidth,
+                        ),
+                        shape: BoxShape.circle,
+                      ),
+                    )
+                  ])),
         ),
         Expanded(
           flex: 5,
@@ -448,12 +480,12 @@ class _MyHomePageState extends State<MyHomePage> {
               decoration: BoxDecoration(
                 color: new Color(0xFF0062ac),
               ),
-              accountName: Text("Adeesh Kulathunga",
+              accountName: Text("Admin",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white,
                   )),
-              accountEmail: Text("adeeshkulathunga@gmail.com",
+              accountEmail: Text("admin@gmail.com",
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.white,

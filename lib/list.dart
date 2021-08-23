@@ -29,6 +29,7 @@ class _PageListChangeState extends State<PageListChange> {
   var reviewComment = '';
   int availabilityId = -1;
   int openButton = 0;
+  var vehicleNumber = '';
 
   @override
   Widget build(BuildContext context) {
@@ -277,8 +278,11 @@ class _PageListChangeState extends State<PageListChange> {
                               "Plate No     =   ${widget.vehicleTypeResponse[index]['licensePlateNumber'].toString()}"),
                           subtitle: Text(
                               "No.of Seats  =   ${widget.vehicleTypeResponse[index]['numberOfSeats'].toString()}"),
-                          onTap: () => validateData(
-                              widget.vehicleTypeResponse[index]['id']),
+                          onTap: () {
+                            vehicleNumber = widget.vehicleTypeResponse[index]['licensePlateNumber'].toString();
+                            validateData(
+                                widget.vehicleTypeResponse[index]['id']);
+                          },
                           onLongPress: () {
                             validateData(
                                 widget.vehicleTypeResponse[index]['id']);
@@ -333,6 +337,17 @@ class _PageListChangeState extends State<PageListChange> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.max,
                             children: <Widget>[
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '   $vehicleNumber  ',
+                                style:
+                                TextStyle(fontSize: 30, color: Colors.black),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
                             Padding(
                               padding: EdgeInsets.only(top: 20.0),
                               child: Container(
@@ -431,8 +446,8 @@ class _PageListChangeState extends State<PageListChange> {
                 decoration: BoxDecoration(
                   color: new Color(0xFF0062ac),
                 ),
-                accountName: Text("Adeesh Kulathunga"),
-                accountEmail: Text("adeeshkulathunga@gmail.com"),
+                accountName: Text("Admin"),
+                accountEmail: Text("admin@gmail.com"),
                 currentAccountPicture: CircleAvatar(
                   backgroundColor:
                       Theme.of(context).platform == TargetPlatform.iOS
